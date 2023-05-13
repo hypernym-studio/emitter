@@ -2,6 +2,8 @@
 
 A super simple and lightweight event emitter.
 
+<sub><a href="https://github.com/hypernym-studio/emitter">Repository</a> | <a href="https://www.npmjs.com/package/@hypernym/emitter">Package</a> | <a href="https://github.com/hypernym-studio/emitter/releases">Releases</a> | <a href="https://github.com/hypernym-studio/emitter/discussions">Discussions</a></sub>
+
 ## Features
 
 - TypeScript friendly
