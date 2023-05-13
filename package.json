@@ -51,6 +51,9 @@
     "typescript": "^5.0.4",
     "vite": "^4.3.5"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "eslintConfig": {
     "extends": "./.config/eslint.config.cjs"
   },
