@@ -1,3 +1,5 @@
+export * from './emitter'
+
 export interface EventsMap {
   [id: string]: unknown
 }
