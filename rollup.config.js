@@ -1,7 +1,7 @@
-import ts from '@rollup/plugin-typescript'
+import { defineConfig } from 'rollup'
+import esbuild from 'rollup-plugin-esbuild'
 import dts from 'rollup-plugin-dts'
 import pkg from './package.json' assert { type: 'json' }
-import { defineConfig } from 'rollup'
 
 const exports = {
   main: pkg.exports['.']
@@ -14,7 +14,7 @@ export default defineConfig([
       { file: exports.main.import, format: 'esm' },
       { file: exports.main.require, format: 'cjs' }
     ],
-    plugins: [ts({ tsconfig: './tsconfig.json' })]
+    plugins: [esbuild()]
   },
   {
     input: './src/types.ts',
