@@ -17,6 +17,18 @@ A super simple and lightweight event emitter.
 npm i @hypernym/emitter
 ```
 
+## Imports
+
+```js
+// CJS
+const { createEmitter } = require('@hypernym/emitter')
+```
+
+```js
+// ESM & TS
+import { createEmitter } from '@hypernym/emitter'
+```
+
 ## Usage
 
 ### JS
@@ -52,17 +64,57 @@ emitter.emit('event-id', { x: 0, y: 0 })
 
 ### .on()
 
+Registers a specific event.
+
 ```ts
 emitter.on(id: string, callback: (event: any) => void)
 ```
 
 ### .emit()
 
+Emits a specific event.
+
 ```ts
 emitter.emit(id: string, event: any)
 ```
 
+### .events
+
+Main events map.
+
+Stores all registered events.
+
+```ts
+emitter.events
+```
+
+### .has()
+
+Checks if a specific event by `id` exists in the map.
+
+```ts
+emitter.events.has(id: string)
+```
+
+### .get()
+
+Gets a specific event by `id` from the map.
+
+```ts
+emitter.events.get(id: string)
+```
+
+### .delete()
+
+Deletes a specific event by `id` from the map.
+
+```ts
+emitter.events.delete(id: string)
+```
+
 ### .clear()
+
+Removes all events from the map.
 
 ```ts
 emitter.events.clear()
