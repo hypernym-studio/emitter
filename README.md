@@ -4,30 +4,15 @@ A super simple and lightweight event emitter.
 
 <sub><a href="https://github.com/hypernym-studio/emitter">Repository</a> | <a href="https://www.npmjs.com/package/@hypernym/emitter">Package</a> | <a href="https://github.com/hypernym-studio/emitter/releases">Releases</a> | <a href="https://github.com/hypernym-studio/emitter/discussions">Discussions</a></sub>
 
-## Features
-
-- TypeScript friendly
-- Supports CJS & ESM
-- Zero dependencies
-- Ultra lightweight
-
-## Installation
-
 ```sh
 npm i @hypernym/emitter
 ```
 
-## Imports
+## Features
 
-```js
-// CJS
-const { createEmitter } = require('@hypernym/emitter')
-```
-
-```js
-// ESM & TS
-import { createEmitter } from '@hypernym/emitter'
-```
+- TypeScript friendly
+- Ultra lightweight
+- No dependencies
 
 ## Usage
 
@@ -38,7 +23,7 @@ import { createEmitter } from '@hypernym/emitter'
 
 const emitter = createEmitter()
 
-emitter.on('event-id', e => console.log(e.x, e.y))
+emitter.on('event-id', (e) => console.log(e.x, e.y))
 
 emitter.emit('event-id', { x: 0, y: 0 })
 ```
@@ -46,7 +31,7 @@ emitter.emit('event-id', { x: 0, y: 0 })
 ### TS
 
 ```ts
-import { createEmitter, Emitter } from '@hypernym/emitter'
+import { createEmitter, type Emitter } from '@hypernym/emitter'
 
 type Events = {
   'event-id': { x: number; y: number }
@@ -55,7 +40,7 @@ type Events = {
 
 const emitter: Emitter<Events> = createEmitter<Events>()
 
-emitter.on('event-id', e => console.log(e.x, e.y))
+emitter.on('event-id', (e) => console.log(e.x, e.y))
 
 emitter.emit('event-id', { x: 0, y: 0 })
 ```
