@@ -1,5 +1,3 @@
-export * from './emitter'
-
 export interface EventsMap {
   [id: string]: unknown
 }
@@ -38,3 +36,6 @@ export interface Emitter<Events extends EventsMap> {
    */
   emit<K extends keyof Events>(id: K, event: Events[K]): void
 }
+
+// Auto-generated
+export * from '../index.js'
