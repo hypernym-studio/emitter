@@ -11,7 +11,7 @@ npm i @hypernym/emitter
 ## Features
 
 - TypeScript friendly
-- Ultra lightweight
+- Fully tree-shakeable
 - No dependencies
 
 ## Usage
