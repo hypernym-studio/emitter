@@ -1,4 +1,4 @@
-import type { EventsMap, Emitter } from './types/index.js'
+import type { EventsMap, Emitter } from './types'
 
 /**
  * Creates an event emitter.
