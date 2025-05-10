@@ -1,12 +1,22 @@
-# Emitter
+<h1 align="center">@hypernym/emitter</h1>
 
-A super simple and lightweight event emitter.
+<p align="center">A super simple and lightweight event emitter.</p>
 
-<sub><a href="https://github.com/hypernym-studio/emitter">Repository</a> | <a href="https://www.npmjs.com/package/@hypernym/emitter">Package</a> | <a href="https://github.com/hypernym-studio/emitter/releases">Releases</a> | <a href="https://github.com/hypernym-studio/emitter/discussions">Discussions</a></sub>
+<p align="center">
+  <a href="https://github.com/hypernym-studio/emitter">Repository</a>
+  <span>✦</span>
+  <a href="https://www.npmjs.com/package/@hypernym/emitter">Package</a>
+  <span>✦</span>
+  <a href="https://github.com/hypernym-studio/emitter/releases">Releases</a>
+  <span>✦</span>
+  <a href="https://github.com/hypernym-studio/emitter/discussions">Discussions</a>
+</p>
 
-```sh
-npm i @hypernym/emitter
-```
+<br>
+
+<pre align="center">pnpm add @hypernym/emitter</pre>
+
+<br>
 
 ## Features
 
@@ -107,12 +117,12 @@ emitter.events.clear()
 
 ## Community
 
-Feel free to use the official [discussions](https://github.com/hypernym-studio/emitter/discussions) for any additional questions.
+Feel free to ask questions or share new ideas.
+
+Use the official [discussions](https://github.com/hypernym-studio/emitter/discussions) to get involved.
 
 ## License
 
-Developed in 🇭🇷 Croatia
+Developed in 🇭🇷 Croatia, © Hypernym Studio.
 
 Released under the [MIT](LICENSE.txt) license.
-
-© Hypernym Studio
