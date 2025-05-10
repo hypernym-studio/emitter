@@ -1,5 +1,5 @@
-import { createEmitter } from '../../src/index.js'
-import type { Emitter } from '../../src/types/index.js'
+import { createEmitter } from '../../src'
+import type { Emitter } from '../../src/types'
 
 type Events = {
   'event-id': { x: number; y: number }
