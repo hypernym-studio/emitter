@@ -24,6 +24,45 @@
 - Fully tree-shakeable
 - No dependencies
 
+<blockquote>
+  <sub><strong>Package size</strong>: <code>~337 B</code> minified, <code>~233 B</code> gzip</sub>
+</blockquote>
+
+### CDN
+
+Here are some examples of how to integrate **Emitter** from a CDN via a script tag.
+
+Also, it is possible to download files manually and serve them accordingly.
+
+#### ESM (minified)
+
+```html
+<script type="module">
+  import { createEmitter } from 'https://unpkg.com/@hypernym/emitter/dist/index.min.mjs'
+  const emitter = createEmitter()
+</script>
+```
+
+#### IIFE (minified)
+
+```html
+<script src="https://unpkg.com/@hypernym/emitter/dist/index.iife.js"></script>
+<script>
+  const { createEmitter } = Emitter
+  const emitter = createEmitter()
+</script>
+```
+
+#### UMD (minified)
+
+```html
+<script src="https://unpkg.com/@hypernym/emitter/dist/index.umd.js"></script>
+<script>
+  const { createEmitter } = Emitter
+  const emitter = createEmitter()
+</script>
+```
+
 ## Usage
 
 ### JS
