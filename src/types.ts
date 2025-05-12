@@ -1,5 +1,5 @@
 export interface EventsMap {
-  [id: string]: unknown
+  [id: string | symbol]: unknown
 }
 
 export interface Emitter<Events extends EventsMap> {
@@ -14,27 +14,62 @@ export interface Emitter<Events extends EventsMap> {
    * emitter.events
    * ```
    */
-  events: Map<keyof Events, Array<(event: any) => void>>
+  events: Map<keyof Events, ((event: Events[keyof Events]) => void)[]>
   /**
-   * Registers a specific event.
+   * Registers an event listener for a specific event type.
+   *
+   * Returns a cleanup function that removes the listener when called.
    *
    * @example
    *
    * ```ts
-   * emitter.on('event-id', e => console.log(e.x, e.y))
+   * // Adds click listener
+   * const unsubscribe = emitter.on('scroll', ({ x, y }) => {
+   *   console.log(x, y)
+   * })
+   *
+   * // Removes the listener
+   * unsubscribe()
    * ```
    */
-  on<K extends keyof Events>(id: K, callback: (event: Events[K]) => void): void
+  on<K extends keyof Events>(
+    id: K,
+    callback: (event: Events[K]) => void,
+  ): () => void
+  /**
+   * Removes event listeners.
+   *
+   * @example
+   *
+   * ```ts
+   * // Removes all event listeners across all event types
+   * emitter.off()
+   *
+   * // Removes all click listeners
+   * emitter.off('click')
+   *
+   * // Removes specific scroll callback
+   * emitter.off('scroll', scrollCallback)
+   * ```
+   */
+  off<K extends keyof Events>(
+    id?: K,
+    callback?: (event: Events[K]) => void,
+  ): void
   /**
    * Emits a specific event.
    *
    * @example
    *
    * ```ts
-   * emitter.emit('event-id', { x: 0, y: 0 })
+   * // Emits scroll event with position data
+   * emitter.emit('scroll', { x: window.scrollX, y: window.scrollY })
+   *
+   * // Emits event without second parameter
+   * emitter.emit('eventWithoutData')
    * ```
    */
-  emit<K extends keyof Events>(id: K, event: Events[K]): void
+  emit<K extends keyof Events>(id: K, event?: Events[K]): void
 }
 
 export * from '@'
