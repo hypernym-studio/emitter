@@ -59,10 +59,41 @@ emitter.emit('event-id', { x: 0, y: 0 })
 
 ### .on()
 
-Registers a specific event.
+Registers an event listener for a specific event type.
+
+Returns a cleanup function that removes the listener when called.
 
 ```ts
-emitter.on(id: string, callback: (event: any) => void)
+emitter.on<K>(id: K, callback: (event: Events[K]) => void): () => void
+```
+
+```ts
+// Adds click listener
+const unsubscribe = emitter.on('scroll', ({ x, y }) => {
+  console.log(x, y)
+})
+
+// Removes the listener
+unsubscribe()
+```
+
+### .off()
+
+Removes event listeners.
+
+```ts
+emitter.off<K>(id?: K | undefined, callback?: ((event: Events[K]) => void) | undefined): void
+```
+
+```ts
+// Removes all event listeners across all event types
+emitter.off()
+
+// Removes all click listeners
+emitter.off('click')
+
+// Removes specific scroll callback
+emitter.off('scroll', scrollCallback)
 ```
 
 ### .emit()
@@ -70,7 +101,15 @@ emitter.on(id: string, callback: (event: any) => void)
 Emits a specific event.
 
 ```ts
-emitter.emit(id: string, event: any)
+emitter.emit<K>(id: K, event?: Events[K] | undefined): void
+```
+
+```ts
+// Emits scroll event with position data
+emitter.emit('scroll', { x: window.scrollX, y: window.scrollY })
+
+// Emits event without second parameter
+emitter.emit('eventWithoutData')
 ```
 
 ### .events
@@ -88,7 +127,7 @@ emitter.events
 Checks if a specific event by `id` exists in the map.
 
 ```ts
-emitter.events.has(id: string)
+emitter.events.has(id: string | symbol)
 ```
 
 ### .get()
@@ -96,7 +135,7 @@ emitter.events.has(id: string)
 Gets a specific event by `id` from the map.
 
 ```ts
-emitter.events.get(id: string)
+emitter.events.get(id: string | symbol)
 ```
 
 ### .delete()
@@ -104,7 +143,7 @@ emitter.events.get(id: string)
 Deletes a specific event by `id` from the map.
 
 ```ts
-emitter.events.delete(id: string)
+emitter.events.delete(id: string | symbol)
 ```
 
 ### .clear()
