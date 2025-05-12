@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@hypernym/bundler':
-        specifier: ^0.14.3
-        version: 0.14.3(@types/node@22.15.17)(typescript@5.8.3)
+        specifier: ^0.14.4
+        version: 0.14.4(@types/node@22.15.17)(typescript@5.8.3)
       '@hypernym/eslint-config':
         specifier: ^3.6.1
         version: 3.6.1(eslint@9.26.0)(typescript@5.8.3)
@@ -257,9 +257,8 @@ packages:
   '@hypernym/args@0.3.2':
     resolution: {integrity: sha512-vCtAHt8PoAJf9Dmm6lRPa20LKN9JzSt1FrSBymKiskNrwa/BMpaVusNL0y4lq1D2sCHniiePtCJ+JNYI5JHvYg==}
 
-  '@hypernym/bundler@0.14.3':
-    resolution: {integrity: sha512-8rBHkKuwvtOP9La+O1CO4wp3MiN7U7Qw1tvITkScIh3vutuX780KCn3CBjUWwCUv2Wh98umg4cK300D2iRzl4Q==}
-    engines: {node: '>=20.0.0', pnpm: '>=9.0.0'}
+  '@hypernym/bundler@0.14.4':
+    resolution: {integrity: sha512-eFNdk4+BVmruiQxoZOyoDGwitOovSZegxzoyorKuSOgdgdQjtTCRc2Yo0Ufqy22UUQ5sby3ca/dzqVlqFr50LA==}
     hasBin: true
     peerDependencies:
       '@types/node': '>=20.0.0'
@@ -1475,7 +1474,7 @@ snapshots:
 
   '@hypernym/args@0.3.2': {}
 
-  '@hypernym/bundler@0.14.3(@types/node@22.15.17)(typescript@5.8.3)':
+  '@hypernym/bundler@0.14.4(@types/node@22.15.17)(typescript@5.8.3)':
     dependencies:
       '@hypernym/args': 0.3.2
       '@hypernym/colors': 1.0.4(@types/node@22.15.17)(typescript@5.8.3)

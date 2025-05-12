@@ -39,7 +39,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@hypernym/bundler": "^0.14.3",
+    "@hypernym/bundler": "^0.14.4",
     "@hypernym/eslint-config": "^3.6.1",
     "@hypernym/prettier-config": "^3.2.4",
     "@hypernym/tsconfig": "^2.6.1",
