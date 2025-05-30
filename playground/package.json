@@ -1,4 +1,7 @@
 {
+  "name": "playground",
+  "version": "0.0.0",
+  "author": "Hypernym Studio",
   "private": true,
-  "name": "playground"
+  "type": "module"
 }
