@@ -48,12 +48,9 @@ export function createEmitter<Events extends EventsMap>(): Emitter<Events> {
         events.delete(id)
         return
       }
-      const callbacks = events.get(id)
-      if (callbacks) {
-        const filtered = callbacks.filter((cb) => cb !== callback)
-        if (filtered.length) events.set(id, filtered)
-        else events.delete(id)
-      }
+      const filtered = events.get(id)?.filter((cb) => cb !== callback)
+      if (filtered?.length) events.set(id, filtered)
+      else events.delete(id)
     },
     emit<K extends keyof Events>(id: K, event: Events[K]): void {
       events
