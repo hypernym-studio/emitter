@@ -27,7 +27,6 @@ export interface Emitter<Events extends EventsMap> {
    * const unsubscribe = emitter.on('scroll', ({ x, y }) => {
    *   console.log(x, y)
    * })
-   *
    * // Removes the listener
    * unsubscribe()
    * ```
@@ -44,10 +43,8 @@ export interface Emitter<Events extends EventsMap> {
    * ```ts
    * // Removes all event listeners across all event types
    * emitter.off()
-   *
    * // Removes all click listeners
    * emitter.off('click')
-   *
    * // Removes specific scroll callback
    * emitter.off('scroll', scrollCallback)
    * ```
@@ -64,12 +61,16 @@ export interface Emitter<Events extends EventsMap> {
    * ```ts
    * // Emits scroll event with position data
    * emitter.emit('scroll', { x: window.scrollX, y: window.scrollY })
-   *
    * // Emits event without second parameter
    * emitter.emit('eventWithoutData')
    * ```
    */
-  emit<K extends keyof Events>(id: K, event?: Events[K]): void
+  emit<K extends keyof Events>(
+    id: K,
+    ...event: Events[K] extends undefined
+      ? [event?: Events[K]]
+      : [event: Events[K]]
+  ): void
 }
 
 export * from '@'
