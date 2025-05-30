@@ -25,7 +25,7 @@
 - No dependencies
 
 <blockquote>
-  <sub><strong>Package size</strong>: <code>~337 B</code> minified, <code>~233 B</code> gzip</sub>
+  <sub><strong>Package size</strong>: <code>~322 B</code> minified, <code>~226 B</code> gzip</sub>
 </blockquote>
 
 ### CDN
@@ -140,7 +140,7 @@ emitter.off('scroll', scrollCallback)
 Emits a specific event.
 
 ```ts
-emitter.emit<K>(id: K, event?: Events[K] | undefined): void
+emitter.emit<K>(id: K, ...event: Events[K] extends undefined ? [event?: Events[K]] : [event: Events[K]]): void
 ```
 
 ```ts
