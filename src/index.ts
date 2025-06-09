@@ -19,6 +19,8 @@ import type { EventsMap, Emitter } from './types'
  *
  * emitter.emit('event-id', { x: 0, y: 0 })
  * ```
+ *
+ * @see [Repository](https://github.com/hypernym-studio/emitter)
  */
 export function createEmitter<Events extends EventsMap>(): Emitter<Events> {
   const events = new Map<
@@ -40,10 +42,7 @@ export function createEmitter<Events extends EventsMap>(): Emitter<Events> {
       id?: K,
       callback?: (event: Events[K]) => void,
     ): void {
-      if (!id) {
-        events.clear()
-        return
-      }
+      if (!id) return events.clear()
       if (!callback) {
         events.delete(id)
         return
