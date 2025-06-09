@@ -23,12 +23,12 @@ export interface Emitter<Events extends EventsMap> {
    * @example
    *
    * ```ts
-   * // Adds click listener
-   * const unsubscribe = emitter.on('scroll', ({ x, y }) => {
+   * // Adds scroll listener
+   * const off = emitter.on('scroll', ({ x, y }) => {
    *   console.log(x, y)
    * })
    * // Removes the listener
-   * unsubscribe()
+   * off()
    * ```
    */
   on<K extends keyof Events>(
@@ -45,6 +45,13 @@ export interface Emitter<Events extends EventsMap> {
    * emitter.off()
    * // Removes all click listeners
    * emitter.off('click')
+   *
+   * // Custom scroll callback
+   * const scrollCallback = ({ x, y }) => {
+   *   console.log(x, y)
+   * }
+   * // Adds specific scroll listener
+   * emitter.on('scroll', scrollCallback)
    * // Removes specific scroll callback
    * emitter.off('scroll', scrollCallback)
    * ```
