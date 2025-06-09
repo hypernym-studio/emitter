@@ -43,8 +43,8 @@
     "@hypernym/eslint-config": "^3.6.1",
     "@hypernym/prettier-config": "^3.2.4",
     "@hypernym/tsconfig": "^2.6.1",
-    "@types/node": "^22.15.27",
-    "eslint": "^9.27.0",
+    "@types/node": "^22.15.30",
+    "eslint": "^9.28.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
