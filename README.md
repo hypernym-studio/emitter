@@ -25,7 +25,7 @@
 - No dependencies
 
 <blockquote>
-  <sub><strong>Package size</strong>: <code>~322 B</code> minified, <code>~226 B</code> gzip</sub>
+  <sub><strong>Package size</strong>: <code>~321 B</code> minified, <code>~226 B</code> gzip</sub>
 </blockquote>
 
 ### CDN
@@ -107,13 +107,13 @@ emitter.on<K>(id: K, callback: (event: Events[K]) => void): () => void
 ```
 
 ```ts
-// Adds click listener
-const unsubscribe = emitter.on('scroll', ({ x, y }) => {
+// Adds scroll listener
+const off = emitter.on('scroll', ({ x, y }) => {
   console.log(x, y)
 })
 
 // Removes the listener
-unsubscribe()
+off()
 ```
 
 ### .off()
@@ -130,6 +130,14 @@ emitter.off()
 
 // Removes all click listeners
 emitter.off('click')
+
+// Custom scroll callback
+const scrollCallback = ({ x, y }) => {
+  console.log(x, y)
+}
+
+// Adds specific scroll listener
+emitter.on('scroll', scrollCallback)
 
 // Removes specific scroll callback
 emitter.off('scroll', scrollCallback)
@@ -191,6 +199,14 @@ Removes all events from the map.
 
 ```ts
 emitter.events.clear()
+```
+
+### .size
+
+Indicates the number of registered events in the map.
+
+```ts
+emitter.events.size
 ```
 
 ## Community
