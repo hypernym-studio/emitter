@@ -25,7 +25,7 @@
 - No dependencies
 
 <blockquote>
-  <sub><strong>Package size</strong>: <code>~321 B</code> minified, <code>~226 B</code> gzip</sub>
+  <sub><strong>Package size</strong>: <code>~316 B</code> minified, <code>~219 B</code> gzip</sub>
 </blockquote>
 
 ### CDN
@@ -38,7 +38,7 @@ Also, it is possible to download files manually and serve them accordingly.
 
 ```html
 <script type="module">
-  import { createEmitter } from 'https://unpkg.com/@hypernym/emitter/dist/index.min.mjs'
+  import { createEmitter } from 'https://unpkg.com/@hypernym/emitter/dist/index.min.js'
   const emitter = createEmitter()
 </script>
 ```
@@ -208,12 +208,6 @@ Indicates the number of registered events in the map.
 ```ts
 emitter.events.size
 ```
-
-## Community
-
-Feel free to ask questions or share new ideas.
-
-Use the official [discussions](https://github.com/hypernym-studio/emitter/discussions) to get involved.
 
 ## License
 
