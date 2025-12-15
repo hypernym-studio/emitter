@@ -1,82 +1,64 @@
-export interface EventsMap {
-  [id: string | symbol]: unknown
+export type EventsMap = {
+  [Key in string | symbol]: unknown
+}
+
+export type OptionsID = string | number | symbol
+
+export type EventOptions<
+  Options extends object = Record<string | symbol, unknown>,
+> = {
+  id?: OptionsID
+  once?: boolean
+} & Options
+
+export type EventCallback<
+  Key extends keyof Events,
+  Events extends EventsMap,
+> = undefined extends Events[Key]
+  ? (event?: Events[Key]) => void
+  : (event: Events[Key]) => void
+
+export type EventDetails<
+  Key extends keyof Events,
+  Events extends EventsMap,
+  Options extends EventOptions = EventOptions,
+> = {
+  id: Key
+  callback: EventCallback<Key, Events>
+  options?: EventOptions<Options>
 }
 
 export interface Emitter<Events extends EventsMap> {
-  /**
-   * Main events map.
-   *
-   * Stores all registered events.
-   *
-   * @example
-   *
-   * ```ts
-   * emitter.events
-   * ```
-   */
-  events: Map<keyof Events, ((event: Events[keyof Events]) => void)[]>
-  /**
-   * Registers an event listener for a specific event type.
-   *
-   * Returns a cleanup function that removes the listener when called.
-   *
-   * @example
-   *
-   * ```ts
-   * // Adds scroll listener
-   * const off = emitter.on('scroll', ({ x, y }) => {
-   *   console.log(x, y)
-   * })
-   * // Removes the listener
-   * off()
-   * ```
-   */
-  on<K extends keyof Events>(
-    id: K,
-    callback: (event: Events[K]) => void,
+  events: Map<
+    keyof Events,
+    Map<EventCallback<keyof Events, Events>, EventDetails<keyof Events, Events>>
+  >
+  on<Key extends keyof Events, Options extends EventOptions = EventOptions>(
+    id: Key,
+    callback: EventCallback<Key, Events>,
+    options?: EventOptions<Options>,
   ): () => void
-  /**
-   * Removes event listeners.
-   *
-   * @example
-   *
-   * ```ts
-   * // Removes all event listeners across all event types
-   * emitter.off()
-   * // Removes all click listeners
-   * emitter.off('click')
-   *
-   * // Custom scroll callback
-   * const scrollCallback = ({ x, y }) => {
-   *   console.log(x, y)
-   * }
-   * // Adds specific scroll listener
-   * emitter.on('scroll', scrollCallback)
-   * // Removes specific scroll callback
-   * emitter.off('scroll', scrollCallback)
-   * ```
-   */
-  off<K extends keyof Events>(
-    id?: K,
-    callback?: (event: Events[K]) => void,
+  off<Key extends keyof Events>(
+    id?: Key,
+    callback?: EventCallback<Key, Events>,
   ): void
-  /**
-   * Emits a specific event.
-   *
-   * @example
-   *
-   * ```ts
-   * // Emits scroll event with position data
-   * emitter.emit('scroll', { x: window.scrollX, y: window.scrollY })
-   * // Emits event without second parameter
-   * emitter.emit('eventWithoutData')
-   * ```
-   */
-  emit<K extends keyof Events>(
-    id: K,
-    ...event: Events[K] extends undefined
-      ? [event?: Events[K]]
-      : [event: Events[K]]
+  get<Key extends keyof Events, Options extends EventOptions = EventOptions>(
+    id: Key,
+    optionsId: OptionsID,
+  ): EventDetails<keyof Events, Events, Options> | undefined
+  emit<Key extends keyof Events, Options extends EventOptions = EventOptions>(
+    id: Key,
+    ...event: undefined extends Events[Key]
+      ? [
+          event?:
+            | Events[Key]
+            | ((details: EventDetails<Key, Events, Options>) => void),
+        ]
+      : [
+          event:
+            | Events[Key]
+            | ((details: EventDetails<Key, Events, Options>) => void),
+        ]
   ): void
 }
 

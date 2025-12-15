@@ -16,25 +16,24 @@
 
 <pre align="center">pnpm add @hypernym/emitter</pre>
 
+<p align="center">
+  <sub>Package size: <code>~529 B</code> minified, <code>~283 B</code> gzip</sub>
+</p>
+
 <br>
 
 ## Features
 
-- TypeScript friendly
-- Fully tree-shakeable
-- No dependencies
+- Ultra Lightweight & Powerful
+- Framework Independent
+- Written in TypeScript
+- Native SSR Support
+- No External Dependencies
+- API Friendly
 
-<blockquote>
-  <sub><strong>Package size</strong>: <code>~316 B</code> minified, <code>~219 B</code> gzip</sub>
-</blockquote>
+## CDN
 
-### CDN
-
-Here are some examples of how to integrate **Emitter** from a CDN via a script tag.
-
-Also, it is possible to download files manually and serve them accordingly.
-
-#### ESM (minified)
+### ESM (minified)
 
 ```html
 <script type="module">
@@ -43,7 +42,7 @@ Also, it is possible to download files manually and serve them accordingly.
 </script>
 ```
 
-#### IIFE (minified)
+### IIFE (minified)
 
 ```html
 <script src="https://unpkg.com/@hypernym/emitter/dist/index.iife.js"></script>
@@ -53,7 +52,7 @@ Also, it is possible to download files manually and serve them accordingly.
 </script>
 ```
 
-#### UMD (minified)
+### UMD (minified)
 
 ```html
 <script src="https://unpkg.com/@hypernym/emitter/dist/index.umd.js"></script>
@@ -80,6 +79,21 @@ emitter.emit('event-id', { x: 0, y: 0 })
 ### TS
 
 ```ts
+import { createEmitter } from '@hypernym/emitter'
+
+type Events = {
+  'event-id': { x: number; y: number }
+  // ...
+}
+
+const emitter = createEmitter<Events>()
+
+emitter.on('event-id', (e) => console.log(e.x, e.y))
+
+emitter.emit('event-id', { x: 0, y: 0 })
+```
+
+```ts
 import { createEmitter, type Emitter } from '@hypernym/emitter'
 
 type Events = {
@@ -88,23 +102,17 @@ type Events = {
 }
 
 const emitter: Emitter<Events> = createEmitter<Events>()
-
-emitter.on('event-id', (e) => console.log(e.x, e.y))
-
-emitter.emit('event-id', { x: 0, y: 0 })
 ```
 
 ## API
 
 ### .on()
 
-Registers an event listener for a specific event type.
+- Type: `(id: Key, callback: EventCallback<Key, Events>, options?: EventOptions<Options>): () => void`
+
+Registers an event listener for a specific event type. Also, supports an optional `object` param for advanced options logic.
 
 Returns a cleanup function that removes the listener when called.
-
-```ts
-emitter.on<K>(id: K, callback: (event: Events[K]) => void): () => void
-```
 
 ```ts
 // Adds scroll listener
@@ -114,15 +122,22 @@ const off = emitter.on('scroll', ({ x, y }) => {
 
 // Removes the listener
 off()
+
+// Adds scroll listener that will be called only `once`
+emitter.on(
+  'scroll',
+  ({ x, y }) => {
+    console.log(x, y)
+  },
+  { once: true },
+)
 ```
 
 ### .off()
 
-Removes event listeners.
+Type: `(id?: Key, callback?: EventCallback<Key, Events>): void`
 
-```ts
-emitter.off<K>(id?: K | undefined, callback?: ((event: Events[K]) => void) | undefined): void
-```
+Removes the registered event listeners.
 
 ```ts
 // Removes all event listeners across all event types
@@ -143,23 +158,64 @@ emitter.on('scroll', scrollCallback)
 emitter.off('scroll', scrollCallback)
 ```
 
+### .get()
+
+- Type: `(id: Key, optionsId: OptionsID): EventDetails<keyof Events, Events, Options> | undefined`
+
+Gets specific event details by `options.id` from the map.
+
+Returns an object `{ id, callback, options }` or `undefined` if not found.
+
+```ts
+// Adds scroll event listener with custom options
+emitter.on(
+  'scroll',
+  ({ x, y }) => {
+    console.log(x, y)
+  },
+  { id: 'custom-scroll', a: true, b: false }, // `id` prop can be any string, number or symbol
+)
+
+// Gets event details by options.id `custom-scroll`
+const details = emitter.get('scroll', 'custom-scroll')
+
+if (details?.options?.a) console.log('run custom logic...')
+```
+
 ### .emit()
+
+- Type: `(id: Key, event: Events[Key] | ((details: EventDetails<Key, Events, Options>) => void)): void`
 
 Emits a specific event.
 
 ```ts
-emitter.emit<K>(id: K, ...event: Events[K] extends undefined ? [event?: Events[K]] : [event: Events[K]]): void
-```
-
-```ts
 // Emits scroll event with position data
-emitter.emit('scroll', { x: window.scrollX, y: window.scrollY })
+emitter.emit('scroll', { x: 0, y: 0 })
 
 // Emits event without second parameter
-emitter.emit('eventWithoutData')
+emitter.emit('event-id')
+
+// Emits event only `once`
+emitter.emit('event-id', ({ id, callback, options }) => {
+  if (options?.once) {
+    callback('event-state') // Triggers callback only `once` with event state
+    emitter.off(id, callback) // Removes callback from the map
+  }
+})
+
+// Emits event with custom logic
+emitter.emit('scroll', ({ callback, options }) => {
+  // Triggers callback with default event state
+  callback({ x: 0, y: 0 })
+
+  // Triggers callback with `custom` event state
+  if (options?.id === 'custom') callback({ x: 100, y: 100 })
+})
 ```
 
 ### .events
+
+- Type: `Map<keyof Events, Map<EventCallback<keyof Events, Events>, EventDetails<keyof Events, Events>>>`
 
 Main events map.
 
@@ -171,6 +227,8 @@ emitter.events
 
 ### .has()
 
+- Type: `(key: keyof Events): boolean`
+
 Checks if a specific event by `id` exists in the map.
 
 ```ts
@@ -178,6 +236,8 @@ emitter.events.has(id: string | symbol)
 ```
 
 ### .get()
+
+- Type: `(key: keyof Events): Map<EventCallback<keyof Events, Events>, EventDetails<keyof Events, Events>> | undefined`
 
 Gets a specific event by `id` from the map.
 
@@ -187,6 +247,8 @@ emitter.events.get(id: string | symbol)
 
 ### .delete()
 
+- Type: `(key: keyof Events): boolean`
+
 Deletes a specific event by `id` from the map.
 
 ```ts
@@ -195,6 +257,8 @@ emitter.events.delete(id: string | symbol)
 
 ### .clear()
 
+- Type: `(): void`
+
 Removes all events from the map.
 
 ```ts
@@ -202,6 +266,8 @@ emitter.events.clear()
 ```
 
 ### .size
+
+- Type: `number`
 
 Indicates the number of registered events in the map.
 

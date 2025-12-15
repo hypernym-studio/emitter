@@ -20,7 +20,7 @@ emitter.emit('event-3')
 
 const eventId = emitter.events.get('event-1')
 
-console.log('emitter.get', eventId) // [0]: (e) => console.log("emitter.on", e.x, e.y)
+console.log('emitter.get', eventId) // Map(1) {ƒ => {…}}: 0: {(e) => console.log("emitter.on", e.x, e.y) => Object}
 
 emitter.off()
 
