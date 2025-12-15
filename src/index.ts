@@ -1,4 +1,11 @@
-import type { EventsMap, Emitter } from './types'
+import type {
+  EventsMap,
+  EventCallback,
+  OptionsID,
+  EventOptions,
+  EventDetails,
+  Emitter,
+} from './types'
 
 /**
  * Creates an event emitter.
@@ -6,14 +13,14 @@ import type { EventsMap, Emitter } from './types'
  * @example
  *
  * ```ts
- * import { createEmitter, type Emitter } from '@hypernym/emitter'
+ * import { createEmitter } from '@hypernym/emitter'
  *
  * type Events = {
  *   'event-id': { x: number; y: number }
  *   // ...
  * }
  *
- * const emitter: Emitter<Events> = createEmitter<Events>()
+ * const emitter = createEmitter<Events>()
  *
  * emitter.on('event-id', e => console.log(e.x, e.y))
  *
@@ -22,40 +29,72 @@ import type { EventsMap, Emitter } from './types'
  *
  * @see [Repository](https://github.com/hypernym-studio/emitter)
  */
-export function createEmitter<Events extends EventsMap>(): Emitter<Events> {
+export function createEmitter<
+  Events extends EventsMap = EventsMap,
+>(): Emitter<Events> {
   const events = new Map<
     keyof Events,
-    ((event: Events[keyof Events]) => void)[]
+    Map<EventCallback<keyof Events, Events>, EventDetails<keyof Events, Events>>
   >()
 
   return {
     events,
-    on<K extends keyof Events>(
-      id: K,
-      callback: (event: Events[K]) => void,
+    on<Key extends keyof Events, Options extends EventOptions = EventOptions>(
+      id: Key,
+      callback: EventCallback<Key, Events>,
+      options?: EventOptions<Options>,
     ): () => void {
-      if (events.has(id)) events.get(id)?.push(callback as any)
-      else events.set(id, [callback as any])
+      let map = events.get(id)
+      if (!map) {
+        map = new Map()
+        events.set(id, map)
+      }
+      map.set(
+        callback as EventCallback<keyof Events, Events>,
+        {
+          id,
+          callback,
+          options,
+        } as EventDetails<keyof Events, Events>,
+      )
       return () => this.off(id, callback)
     },
-    off<K extends keyof Events>(
-      id?: K,
-      callback?: (event: Events[K]) => void,
+    off<Key extends keyof Events>(
+      id?: Key,
+      callback?: EventCallback<Key, Events>,
     ): void {
       if (!id) return events.clear()
+      const map = events.get(id)
+      if (!map) return
       if (!callback) {
         events.delete(id)
         return
       }
-      const filtered = events.get(id)?.filter((cb) => cb !== callback)
-      if (filtered?.length) events.set(id, filtered)
-      else events.delete(id)
+      map.delete(callback as EventCallback<keyof Events, Events>)
+      if (!map.size) events.delete(id)
     },
-    emit<K extends keyof Events>(id: K, event: Events[K]): void {
-      events
-        .get(id)
-        ?.slice()
-        .forEach((cb) => cb(event))
+    get<Key extends keyof Events, Options extends EventOptions = EventOptions>(
+      id: Key,
+      optionsId: OptionsID,
+    ): EventDetails<keyof Events, Events, Options> | undefined {
+      const map = events.get(id)
+      if (!map) return
+      for (const details of [...map.values()]) {
+        if (details.options?.id === optionsId) {
+          return details as
+            | EventDetails<keyof Events, Events, Options>
+            | undefined
+        }
+      }
+    },
+    emit<Key extends keyof Events>(id: Key, event: Events[Key]): void {
+      const map = events.get(id)
+      if (!map) return
+      if (event instanceof Function) {
+        for (const details of [...map.values()]) event(details)
+        return
+      }
+      for (const { callback } of [...map.values()]) callback(event)
     },
   }
 }
