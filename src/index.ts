@@ -90,7 +90,7 @@ export function createEmitter<
     emit<Key extends keyof Events>(id: Key, event: Events[Key]): void {
       const map = events.get(id)
       if (!map) return
-      if (event instanceof Function) {
+      if (typeof event === 'function') {
         for (const details of [...map.values()]) event(details)
         return
       }
