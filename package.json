@@ -1,6 +1,6 @@
 {
   "name": "@hypernym/emitter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "Hypernym Studio",
   "description": "A super simple and lightweight event emitter.",
   "license": "MIT",
