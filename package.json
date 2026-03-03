@@ -21,6 +21,8 @@
     "dist"
   ],
   "keywords": [
+    "hyper",
+    "hypernym",
     "emit",
     "event",
     "events",
@@ -28,25 +30,24 @@
     "event-emitter",
     "javascript",
     "typescript",
+    "manager",
     "esm"
   ],
   "scripts": {
     "dev": "vite playground",
     "build": "hyperbundler",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
-    "format": "prettier --write .",
+    "lint": "oxlint",
+    "format": "oxfmt",
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@hypernym/bundler": "^0.30.7",
-    "@hypernym/eslint-config": "^3.6.6",
-    "@hypernym/prettier-config": "^3.2.10",
-    "@hypernym/tsconfig": "^2.6.4",
-    "@types/node": "^24.10.4",
-    "eslint": "^9.39.2",
-    "prettier": "^3.7.4",
+    "@hypernym/bundler": "^0.32.0",
+    "@hypernym/oxlint-config": "^0.1.0",
+    "@hypernym/tsconfig": "^2.7.0",
+    "@types/node": "^25.3.3",
+    "oxfmt": "^0.36.0",
+    "oxlint": "^1.51.0",
     "typescript": "^5.9.3",
-    "vite": "^7.3.0"
+    "vite": "8.0.0-beta.16"
   }
 }
