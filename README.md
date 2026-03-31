@@ -4,11 +4,11 @@
 
 <p align="center">
   <a href="https://github.com/hypernym-studio/emitter">Repository</a>
-  <span>✦</span>
+  <span>|</span>
   <a href="https://www.npmjs.com/package/@hypernym/emitter">Package</a>
-  <span>✦</span>
+  <span>|</span>
   <a href="https://github.com/hypernym-studio/emitter/releases">Releases</a>
-  <span>✦</span>
+  <span>|</span>
   <a href="https://github.com/hypernym-studio/emitter/discussions">Discussions</a>
 </p>
 
@@ -17,7 +17,7 @@
 <pre align="center">pnpm add @hypernym/emitter</pre>
 
 <p align="center">
-  <sub>Package size: <code>~529 B</code> minified, <code>~283 B</code> gzip</sub>
+  <sub>Size: <code>~0.52 KB</code> min, <code>~0.29 KB</code> gzip</sub>
 </p>
 
 <br>
