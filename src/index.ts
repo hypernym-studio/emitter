@@ -63,15 +63,24 @@ export function createEmitter<
       id?: Key,
       callback?: EventCallback<Key, Events>,
     ): void {
-      if (!id) return events.clear()
-      const map = events.get(id)
+      if (!id && !callback) return events.clear()
+      if (!id && callback) {
+        for (const [key, map] of [...events.entries()]) {
+          if (map.delete(callback as EventCallback<keyof Events, Events>)) {
+            if (!map.size) events.delete(key)
+            break
+          }
+        }
+        return
+      }
+      const map = events.get(id!)
       if (!map) return
       if (!callback) {
-        events.delete(id)
+        events.delete(id!)
         return
       }
       map.delete(callback as EventCallback<keyof Events, Events>)
-      if (!map.size) events.delete(id)
+      if (!map.size) events.delete(id!)
     },
     get<Key extends keyof Events, Options extends EventOptions = EventOptions>(
       id: Key,
@@ -90,11 +99,12 @@ export function createEmitter<
     emit<Key extends keyof Events>(id: Key, event: Events[Key]): void {
       const map = events.get(id)
       if (!map) return
+      const values = [...map.values()]
       if (typeof event === 'function') {
-        for (const details of [...map.values()]) event(details)
+        for (const details of values) event(details)
         return
       }
-      for (const { callback } of [...map.values()]) callback(event)
+      for (const { callback } of values) callback(event)
     },
   }
 }
