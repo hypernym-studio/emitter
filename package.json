@@ -45,14 +45,14 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@hypernym/bundler": "^0.32.1",
-    "@hypernym/changelog": "^0.1.1",
+    "@hypernym/bundler": "^0.32.2",
+    "@hypernym/changelog": "^0.3.0",
     "@hypernym/oxlint-config": "^0.1.0",
-    "@hypernym/tsconfig": "^2.7.0",
-    "@types/node": "^25.5.0",
-    "oxfmt": "^0.43.0",
-    "oxlint": "^1.58.0",
+    "@hypernym/tsconfig": "^2.7.1",
+    "@types/node": "^25.6.0",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
     "typescript": "^5.9.3",
-    "vite": "8.0.0-beta.16"
+    "vite": "^8.0.8"
   }
 }
