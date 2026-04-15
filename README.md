@@ -17,7 +17,7 @@
 <pre align="center">pnpm add @hypernym/emitter</pre>
 
 <p align="center">
-  <sub>Size: <code>~0.52 KB</code> min, <code>~0.29 KB</code> gzip</sub>
+  <sub>Size: <code>~0.61 KB</code> min, <code>~0.33 KB</code> gzip</sub>
 </p>
 
 <br>
@@ -145,6 +145,9 @@ emitter.off()
 
 // Removes all click listeners
 emitter.off('click')
+
+// Removes specific callback from the `events` map without `id`
+emitter.off(undefined, callback)
 
 // Custom scroll callback
 const scrollCallback = ({ x, y }) => {

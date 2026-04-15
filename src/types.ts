@@ -14,9 +14,11 @@ export type EventOptions<
 export type EventCallback<
   Key extends keyof Events,
   Events extends EventsMap,
-> = undefined extends Events[Key]
-  ? (event?: Events[Key]) => void
-  : (event: Events[Key]) => void
+> = Key extends any
+  ? undefined extends Events[Key]
+    ? (event?: Events[Key]) => void
+    : (event: Events[Key]) => void
+  : never
 
 export type EventDetails<
   Key extends keyof Events,
