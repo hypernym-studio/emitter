@@ -104,7 +104,9 @@ export function createEmitter<
         for (const details of values) event(details)
         return
       }
-      for (const { callback } of values) callback(event)
+      for (const { callback } of values) {
+        ;(callback as (arg: Events[Key]) => void)(event)
+      }
     },
   }
 }
